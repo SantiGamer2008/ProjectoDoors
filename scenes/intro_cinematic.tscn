@@ -1,0 +1,141 @@
+[gd_scene load_steps=12 format=3 uid="uid://m3r4hr3kmmmc"]
+
+[ext_resource type="Script" uid="uid://detndwmw14tpg" path="res://scenes/intro_cinematic.gd" id="1_ucmjg"]
+[ext_resource type="PackedScene" uid="uid://cgdva7jsx8gr4" path="res://assets/models/Door.blend" id="1_v4rfw"]
+
+[sub_resource type="Animation" id="Animation_ucmjg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 18)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Fondo negro:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_v4rfw"]
+resource_name = "Zoom"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.6, 18), Vector3(0, 0.6, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Fondo negro:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.5666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jqqea"]
+_data = {
+&"RESET": SubResource("Animation_ucmjg"),
+&"Zoom": SubResource("Animation_v4rfw")
+}
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0rngq"]
+sky_top_color = Color(0.093205534, 0.12084555, 0.15853292, 1)
+sky_horizon_color = Color(0.33414894, 0.35027224, 0.36640316, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.12136683, 0.12827684, 0.13769868, 1)
+
+[sub_resource type="Sky" id="Sky_31033"]
+sky_material = SubResource("ProceduralSkyMaterial_0rngq")
+
+[sub_resource type="Environment" id="Environment_q0rv4"]
+background_mode = 2
+sky = SubResource("Sky_31033")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_color = Color(0.34270766, 0.3729725, 0.42005956, 1)
+volumetric_fog_anisotropy = 0.3
+volumetric_fog_length = 229.49
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ucmjg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4rfw"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jqqea"]
+material = SubResource("StandardMaterial3D_v4rfw")
+
+[node name="IntroCinematic" type="Node3D"]
+script = ExtResource("1_ucmjg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jqqea")
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q0rv4")
+
+[node name="Door2" parent="." instance=ExtResource("1_v4rfw")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 18)
+
+[node name="Room" type="Node3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-8.742278e-08, -1, 0, 2, -4.371139e-08, 0, 0, 0, 10, 2, 2, 8)
+mesh = SubResource("PlaneMesh_ucmjg")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-8.742278e-08, 1, 0, -2, -4.371139e-08, 0, 0, 0, 10, -2, 2, 8)
+mesh = SubResource("PlaneMesh_ucmjg")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(2, 0, 0, 0, -4.371139e-08, -3, 0, 1, -1.3113416e-07, 0, 2, -0.08456388)
+mesh = SubResource("PlaneMesh_ucmjg")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-2, 8.742278e-08, 0, -1.7484555e-07, -1, 0, 0, 0, 10, 0, 4, 8)
+mesh = SubResource("PlaneMesh_ucmjg")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 8)
+mesh = SubResource("PlaneMesh_ucmjg")
+skeleton = NodePath("../..")
+
+[node name="Fondo negro" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.6000004, 0, 0, 0, 0.25881904, -3.7671106, 0, 0.96592593, 1.0093942, 0, 1, 1)
+visible = false
+mesh = SubResource("PlaneMesh_jqqea")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

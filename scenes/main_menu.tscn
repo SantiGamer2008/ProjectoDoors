@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5o2qyex2cmb2"]
+
+[ext_resource type="PackedScene" uid="uid://cgdva7jsx8gr4" path="res://assets/models/Door.blend" id="1_l6cm7"]
+[ext_resource type="PackedScene" uid="uid://c1hsxmvxrxx66" path="res://scenes/Interface/main_menu_interface.tscn" id="2_ekxnf"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ekxnf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bqqt6"]
+sky_top_color = Color(0.093205534, 0.12084555, 0.15853292, 1)
+sky_horizon_color = Color(0.33414894, 0.35027224, 0.36640316, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.12136683, 0.12827684, 0.13769868, 1)
+
+[sub_resource type="Sky" id="Sky_31033"]
+sky_material = SubResource("ProceduralSkyMaterial_bqqt6")
+
+[sub_resource type="Environment" id="Environment_wu84c"]
+background_mode = 2
+sky = SubResource("Sky_31033")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_color = Color(0.34270766, 0.3729725, 0.42005956, 1)
+volumetric_fog_anisotropy = 0.3
+volumetric_fog_length = 229.49
+
+[node name="Main Menu" type="Node3D"]
+
+[node name="Room" type="Node3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-8.742278e-08, -1, 0, 2, -4.371139e-08, 0, 0, 0, 10, 2, 2, 8)
+mesh = SubResource("PlaneMesh_ekxnf")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-8.742278e-08, 1, 0, -2, -4.371139e-08, 0, 0, 0, 10, -2, 2, 8)
+mesh = SubResource("PlaneMesh_ekxnf")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(2, 0, 0, 0, -4.371139e-08, -3, 0, 1, -1.3113416e-07, 0, 2, -0.08456388)
+mesh = SubResource("PlaneMesh_ekxnf")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(-2, 8.742278e-08, 0, -1.7484555e-07, -1, 0, 0, 0, 10, 0, 4, 8)
+mesh = SubResource("PlaneMesh_ekxnf")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 8)
+mesh = SubResource("PlaneMesh_ekxnf")
+skeleton = NodePath("../..")
+
+[node name="Door2" parent="Room" instance=ExtResource("1_l6cm7")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wu84c")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 2)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Main Menu Interface" parent="CanvasLayer" instance=ExtResource("2_ekxnf")]
